@@ -1,0 +1,8 @@
+{
+  "name": "putt-parade",
+  "private": true,
+  "description": "Putt Parade — mini-golf for the whole family, on gamekit",
+  "scripts": {
+    "test": "node --test tests/*.test.js"
+  }
+}

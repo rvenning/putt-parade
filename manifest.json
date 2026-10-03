@@ -1,0 +1,15 @@
+{
+  "name": "Putt Parade",
+  "short_name": "Putt Parade",
+  "description": "Mini-golf for the whole family: four courses, 36 holes, pass-the-phone play for up to four, a daily hole and three art styles.",
+  "start_url": ".",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#2f6b3a",
+  "theme_color": "#2f6b3a",
+  "icons": [
+    { "src": "icons/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "icons/maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}

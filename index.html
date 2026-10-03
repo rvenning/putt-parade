@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="gk-version" content="1" data-date="2026-10-03" data-kit="1.10.1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, viewport-fit=cover">
+<title>Putt Parade — Mini-golf for the whole family</title>
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#2f6b3a">
+<meta name="description" content="Mini-golf for the whole family. Four courses, 36 holes, up to four players passing one phone, a daily hole, and three art styles to choose from.">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Putt Parade">
+<link rel="apple-touch-icon" href="icons/icon-192.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Lilita+One&family=Nunito:wght@600;700;800;900&family=Gaegu:wght@400;700&family=Patrick+Hand&family=Bungee&family=Chakra+Petch:wght@500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="lib/gk-base.css">
+<link rel="stylesheet" href="css/style.css">
+<link rel="icon" href="icons/icon-192.png">
+</head>
+<body class="st-diorama">
+
+<svg class="sprite" aria-hidden="true" focusable="false"><defs>
+  <symbol id="ico-flag" viewBox="0 0 24 24"><path d="M6 21V3" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" fill="none"/><path d="M7 3.5l11 4.2-11 4.3z" fill="currentColor"/></symbol>
+  <symbol id="ico-star" viewBox="0 0 24 24"><path d="M12 2.6l2.9 6 6.5.8-4.8 4.5 1.2 6.5L12 17.2l-5.8 3.2 1.2-6.5L2.6 9.4l6.5-.8z" fill="currentColor"/></symbol>
+  <symbol id="ico-lock" viewBox="0 0 24 24"><rect x="5" y="10" width="14" height="11" rx="2.5" fill="currentColor"/><path d="M8 10V7.5a4 4 0 018 0V10" stroke="currentColor" stroke-width="2.2" fill="none"/></symbol>
+  <symbol id="ico-gear" viewBox="0 0 24 24"><path d="M12 8.5a3.5 3.5 0 100 7 3.5 3.5 0 000-7zm8.6 4.7l1.8 1.4-2 3.5-2.2-.8a8 8 0 01-1.9 1.1L16 20.7h-4l-.3-2.3a8 8 0 01-1.9-1.1l-2.2.8-2-3.5 1.8-1.4a8 8 0 010-2.2L5.6 9.6l2-3.5 2.2.8a8 8 0 011.9-1.1L12 3.3h4l.3 2.3a8 8 0 011.9 1.1l2.2-.8 2 3.5-1.8 1.4a8 8 0 010 2.2z" fill="currentColor" transform="translate(-2 0)"/></symbol>
+  <symbol id="ico-trophy" viewBox="0 0 24 24"><path d="M7 3h10v4a5 5 0 01-10 0zM5 4H3v2a4 4 0 004 4M19 4h2v2a4 4 0 01-4 4M12 12v4M8 20h8M9.5 16h5l.8 4h-6.6z" stroke="currentColor" stroke-width="2" fill="none" stroke-linejoin="round"/></symbol>
+  <symbol id="ico-pause" viewBox="0 0 24 24"><rect x="6" y="4.5" width="4" height="15" rx="1.4" fill="currentColor"/><rect x="14" y="4.5" width="4" height="15" rx="1.4" fill="currentColor"/></symbol>
+  <symbol id="ico-back" viewBox="0 0 24 24"><path d="M15 4l-8 8 8 8" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" fill="none"/></symbol>
+  <symbol id="ico-undo" viewBox="0 0 24 24"><path d="M9 7H4V2" stroke="currentColor" stroke-width="2.4" fill="none" stroke-linecap="round" stroke-linejoin="round"/><path d="M4.5 7A8.5 8.5 0 1112 20.5" stroke="currentColor" stroke-width="2.4" fill="none" stroke-linecap="round"/></symbol>
+  <symbol id="ico-card" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2.5" stroke="currentColor" stroke-width="2" fill="none"/><path d="M3 9h18M9 4v16M15 4v16" stroke="currentColor" stroke-width="1.6"/></symbol>
+  <symbol id="ico-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4.5" fill="currentColor"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M4.9 4.9l2.1 2.1M17 17l2.1 2.1M4.9 19.1L7 17M17 7l2.1-2.1" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></symbol>
+</defs></svg>
+
+<!-- Splash -->
+<div class="screen active" id="screen-splash">
+  <canvas id="hero" class="hero-cv" aria-hidden="true"></canvas>
+  <div class="splash-inner">
+    <div class="logo-plate">
+      <h1 class="logo"><span class="l1">Putt</span><span class="l2">Parade</span></h1>
+      <p class="tagline">Mini-golf for the whole family</p>
+    </div>
+    <div class="splash-btns">
+      <button class="btn big primary" id="btn-continue-as" hidden></button>
+      <button class="btn big primary" id="btn-start" onclick="App.play()">Play</button>
+      <div class="row-btns2">
+        <button class="btn soft" onclick="App.openSettings()"><svg class="i"><use href="#ico-gear"/></svg>Settings</button>
+        <button class="btn soft" onclick="App.howTo()">How to play</button>
+      </div>
+      <button class="btn soft" id="btn-install" style="display:none">Add to Home Screen</button>
+    </div>
+    <div class="splash-foot">
+      <span id="sync-badge">connecting…</span>
+      <button class="btn-sound iconbtn" aria-label="Sound">🔊</button>
+    </div>
+  </div>
+</div>
+
+<!-- Profiles (roster + PIN modals rendered by GK.Profiles) -->
+<div class="screen" id="screen-profiles">
+  <header class="topbar">
+    <button class="iconbtn" onclick="App.showScreen('splash')" aria-label="Back"><svg class="i"><use href="#ico-back"/></svg></button>
+    <h2 class="grow">Who's playing?</h2>
+    <button class="btn-sound iconbtn" aria-label="Sound">🔊</button>
+  </header>
+  <div class="content"><div class="profile-list" id="profile-list"></div></div>
+</div>
+
+<!-- Clubhouse: who is playing, the courses, the daily hole -->
+<div class="screen" id="screen-club">
+  <header class="topbar sticky">
+    <button class="iconbtn" onclick="App.play()" aria-label="Switch player"><span id="club-avatar">👤</span></button>
+    <div class="grow club-title"><span class="kicker">The Clubhouse</span><b id="club-name"></b></div>
+    <button class="iconbtn" onclick="App.showLeaderboard()" aria-label="Family leaderboard"><svg class="i"><use href="#ico-trophy"/></svg></button>
+    <button class="iconbtn" onclick="App.openSettings()" aria-label="Settings"><svg class="i"><use href="#ico-gear"/></svg></button>
+  </header>
+  <div class="content">
+    <section class="party panel" aria-label="Players">
+      <div class="party-head"><span class="kicker">Playing today</span><button class="link" id="btn-add-player" onclick="App.openAddPlayer()">+ Add a player</button></div>
+      <div class="party-list" id="party-list"></div>
+    </section>
+    <div class="courses" id="courses"></div>
+    <button class="daily-card panel" id="daily-card" onclick="App.startDaily()"></button>
+  </div>
+</div>
+
+<!-- One course: its nine holes -->
+<div class="screen" id="screen-course">
+  <header class="topbar sticky">
+    <button class="iconbtn" onclick="App.showClub()" aria-label="Back to the clubhouse"><svg class="i"><use href="#ico-back"/></svg></button>
+    <div class="grow club-title"><span class="kicker" id="course-kicker"></span><b id="course-title"></b></div>
+    <button class="btn-sound iconbtn" aria-label="Sound">🔊</button>
+  </header>
+  <div class="content">
+    <div class="course-hero panel" id="course-hero"></div>
+    <button class="btn big primary wide" id="btn-round"></button>
+    <p class="nudge">Or tap any hole to practise it on its own.</p>
+    <div class="holes" id="holes"></div>
+  </div>
+</div>
+
+<!-- The green -->
+<div class="screen" id="screen-game">
+  <div class="game-stage" id="game-stage">
+    <canvas id="cv" aria-label="The hole"></canvas>
+    <header class="hud" id="hud">
+      <button class="hud-btn" onclick="Play.pause()" aria-label="Pause"><svg class="i"><use href="#ico-pause"/></svg></button>
+      <span class="pill hole-pill" id="hud-hole">Hole 1 · Par 2</span>
+      <span class="grow"></span>
+      <span class="pill stroke-pill" id="hud-strokes">0</span>
+      <span class="pill player-pill" id="hud-player"><i class="seat-dot"></i><span></span></span>
+    </header>
+    <div class="power" id="power" aria-hidden="true"><i></i><span></span></div>
+    <button class="hud-btn doover" id="btn-doover" hidden onclick="Play.doOver()" aria-label="Do-over: take your last shot again"><svg class="i"><use href="#ico-undo"/></svg><span>Do-over</span></button>
+    <div class="hole-card" id="hole-card" aria-live="polite"></div>
+    <div class="turn-card" id="turn-card" aria-live="polite"></div>
+    <div class="stamp" id="stamp" aria-live="polite"></div>
+    <div class="hint" id="hint">Pull back anywhere, then let go to putt</div>
+  </div>
+</div>
+
+<!-- End of a round -->
+<div class="screen" id="screen-results">
+  <div class="res-inner panel">
+    <div class="kicker" id="res-kicker"></div>
+    <h2 class="res-title" id="res-title"></h2>
+    <div class="res-stars" id="res-stars"></div>
+    <div class="res-big" id="res-big"></div>
+    <div class="card-wrap" id="res-card"></div>
+    <p class="res-note" id="res-note"></p>
+    <div class="res-actions">
+      <button class="btn big primary" id="res-next"></button>
+      <div class="row-btns2">
+        <button class="btn soft" id="res-again">Play again</button>
+        <button class="btn soft" id="res-club">Clubhouse</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Leaderboard -->
+<div class="screen" id="screen-leaderboard">
+  <header class="topbar sticky">
+    <button class="iconbtn" onclick="App.showClub()" aria-label="Back"><svg class="i"><use href="#ico-back"/></svg></button>
+    <h2 class="grow">The Family</h2>
+    <button class="btn-sound iconbtn" aria-label="Sound">🔊</button>
+  </header>
+  <div class="content">
+    <div class="lb-tabs" id="lb-tabs" role="tablist"></div>
+    <p class="nudge" id="lb-note"></p>
+    <div class="lb-rows" id="lb-rows"></div>
+  </div>
+</div>
+
+<!-- Scorecard between holes -->
+<div class="modal" id="modal-card">
+  <div class="modal-box scorecard-box">
+    <div class="kicker" id="mc-kicker"></div>
+    <h2 id="mc-title"></h2>
+    <div class="card-wrap" id="mc-card"></div>
+    <button class="btn big primary wide" id="mc-next"></button>
+    <button class="btn soft wide" id="mc-close" hidden>Back to the hole</button>
+  </div>
+</div>
+
+<!-- Pause -->
+<div class="modal" id="modal-pause">
+  <div class="modal-box">
+    <h2>Paused</h2>
+    <p id="pause-where"></p>
+    <button class="btn big primary wide" onclick="Play.resume()">Keep playing</button>
+    <div class="row-btns2">
+      <button class="btn soft" onclick="App.showCardFromPause()"><svg class="i"><use href="#ico-card"/></svg>Scorecard</button>
+      <button class="btn soft" onclick="App.openSettings(true)"><svg class="i"><use href="#ico-gear"/></svg>Settings</button>
+    </div>
+    <div class="row-btns2">
+      <button class="btn soft" onclick="App.restartHole()">Restart hole</button>
+      <button class="btn soft" onclick="App.exitGame()">Leave</button>
+    </div>
+  </div>
+</div>
+
+<!-- Settings -->
+<div class="modal" id="modal-settings">
+  <div class="modal-box settings-box">
+    <h2>Settings</h2>
+    <div class="kicker">Art style</div>
+    <div class="styles" id="style-list" role="radiogroup" aria-label="Art style"></div>
+    <div class="toggles">
+      <label class="toggle"><input type="checkbox" id="set-sound"><span>Sound effects</span></label>
+      <label class="toggle"><input type="checkbox" id="set-music"><span>Music</span></label>
+      <label class="toggle" id="helper-row"><input type="checkbox" id="set-helper"><span>Helper for <b id="helper-name"></b><small>Longer aiming guide and one free do-over on every hole</small></span></label>
+    </div>
+    <button class="btn primary wide" onclick="App.closeSettings()">Done</button>
+  </div>
+</div>
+
+<!-- Add a player to today's game -->
+<div class="modal" id="modal-add">
+  <div class="modal-box">
+    <h2>Add a player</h2>
+    <p>Up to four people can play, passing the phone after every shot.</p>
+    <div class="add-list" id="add-list"></div>
+    <button class="btn soft wide" onclick="GK.UI.closeModal('modal-add')">Done</button>
+  </div>
+</div>
+
+<!-- How to play -->
+<div class="modal" id="modal-howto">
+  <div class="modal-box howto">
+    <h2>How to play</h2>
+    <ul class="howto-list">
+      <li><span><b>Putt:</b> press anywhere on the hole and pull back, like a catapult. The further you pull, the harder you hit. Let go to putt. Slide back to the start to cancel.</span></li>
+      <li><span><b>The guide:</b> dots show where the ball will go, up to its first bounce.</span></li>
+      <li><span><b>Par</b> is the number of strokes a good shot should take. Under par is a birdie, one shot is a hole in one.</span></li>
+      <li><span><b>Hazards:</b> sand slows the ball, ice keeps it sliding, hills pull it sideways, and water costs a stroke and sends you back.</span></li>
+      <li><span><b>Friends:</b> add up to four players in the clubhouse. Everyone takes one shot at a time, passing the phone.</span></li>
+      <li><span><b>Helper:</b> turn it on in Settings for a longer guide and one free do-over on every hole.</span></li>
+      <li><span><b>Daily Hole:</b> a new hole every day, the same for the whole family. Fewest strokes wins.</span></li>
+    </ul>
+    <button class="btn primary wide" onclick="GK.UI.closeModal('modal-howto')">Got it</button>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<!-- gamekit (vendored from rvenning/gamekit into lib/) -->
+<script src="lib/gk-util.js"></script>
+<script src="lib/gk-audio.js"></script>
+<script src="lib/gk-ui.js"></script>
+<script src="lib/gk-storage.js"></script>
+<script src="lib/gk-profiles.js"></script>
+<script src="lib/gk-pwa.js"></script>
+<script src="lib/gk-fx.js"></script>
+<script src="lib/gk-debug.js"></script>
+<script src="js/firebase-config.js"></script>
+<!-- engine: no DOM, no canvas, no randomness -->
+<script src="js/physics.js"></script>
+<script src="js/hole.js"></script>
+<script src="js/courses.js"></script>
+<script src="js/game.js"></script>
+<script src="js/bot.js"></script>
+<script src="js/demo.js"></script>
+<!-- app -->
+<script src="js/storage.js"></script>
+<script src="js/audio.js"></script>
+<script src="js/art.js"></script>
+<script src="js/style-diorama.js"></script>
+<script src="js/style-paper.js"></script>
+<script src="js/style-glow.js"></script>
+<script src="js/render.js"></script>
+<script src="js/input.js"></script>
+<script src="js/main.js"></script>
+</body>
+</html>
